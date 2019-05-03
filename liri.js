@@ -12,18 +12,24 @@ const bands = keys.bandsintown
 const Spotify = require ('node-spotify-api');
 const spotify = new Spotify(keys.spotify);
 
+//require the .txt file to write to
 const fs = require('fs');
+
+//require the axios npm package
 const axios = require('axios')
 
+//require the omdb npm package
 const Omdb = require('omdb');
 let userCommand = process.argv[2];
 
-
+//storing everything after userCommand as the user input/entry
 let userEntry = process.argv.slice(3).join(' ')
 
 let moment = require("moment");
 
-const mySpotify = function(songName) {
+const mySpotify = function() {
+    // console.log(songName);
+    
     spotify.search({ 
         type: 'track', 
         query: userEntry }, 
@@ -33,114 +39,152 @@ const mySpotify = function(songName) {
             return;
         } 
         var trackInfo = data.tracks.items
-
-        //Loop through all the track information array
-        for (var i = 0; i < trackInfo.length; i++) {
-            //Store album object as var
-            let albumObject = trackInfo[i].album;
-            let preview = trackInfo[i].preview_url
-            //Artist name from spotify api based off search
-            let artist = albumObject.artists
-            let albumName = albumObject.name;
-            //Loop through all of the artist array
-            for (var j = 0; j < artist.length; j++) {
-                
-                console.log("\nArtist: " + artist[j].name)
-                console.log("Song Name: " + userEntry.toUpperCase())
-                console.log("Preview of Song: " + preview)
-                console.log("Album Name: " + albumName);
-                console.log("----------------\n")
-
-                fs.appendFile("log.txt" + '\n', movieData, function(err) {
-                    if (err) throw err;
-                })
+        if (trackInfo.length > 0) {
+            //Loop through all the track information array
+            for (var i = 0; i < trackInfo.length; i++) {
+                //Store album object as var
+                let albumObject = trackInfo[i].album;
+                let preview = trackInfo[i].preview_url
+                //Artist name from spotify api based off search
+                let artist = albumObject.artists
+                let albumName = albumObject.name;
+                //Loop through all of the artist array
+                for (var j = 0; j < artist.length; j++) {
+                    
+                    //logging data to console
+                    console.log('\nArtist: ' + artist[j].name)
+                    console.log('Song Name: ' + userEntry.toUpperCase())
+                    console.log('Preview of Song: ' + preview)
+                    console.log('Album Name: ' + albumName);
+                    console.log('----------------\n')
+    
+                }
             }
+        } else {
+            //if the user entry isn't a valid song
+            console.log('Sorry, no information found for "' + userEntry + '" song');
         }
     });
 }
 const myBandsintown = function(response) {
-    
-    var appKey = 'codingbootcamp'
-    var url = 'https://rest.bandsintown.com/artists/' + userEntry + '/events?app_id=' + appKey;
-    axios.get(url).then(
+    //env app key from .env
+    let appKey = 'codingbootcamp'
+    //formatting the user response and accounting for special char
+    response = response.replace(/\s/g, '%20');
+    response = response.replace(/\//g, '%252F');
+    response = response.replace(/\?/g, '%253F');
+    response = response.replace(/\*/g, '%252A');
+    // response = queryParam.replace(/\"/g, "%27C"); 
+    let url = 'https://rest.bandsintown.com/artists/' + userEntry + '/events?app_id=' + appKey;
+    axios.get(url)
+        .then(
         function(response) {
             //loop through each concert returned for an artist
-            for (let i = 0; i < response.data.length; i++) {
-                //store response into a variable
-                let jsonData = response.data[i];
+            if (response.data.length > 0) {
+                for (let i = 0; i < response.data.length; i++) {
+                    //store response into a variable
+                    let jsonData = response.data[i];
 
-                // translate each data variable into an array
-                let concertData = [
-                    'Artist: ' + userEntry.toUpperCase(),
-                    'Concert Date: ' + moment(jsonData.datetime).format('L'),
-                    'Venue Name: ' + jsonData.venue.name,
-                    'City: ' + jsonData.venue.city
-                ].join('\n');
-                
-                // log data values to console
-                console.log('\n---------');
-                console.log(concertData);
-                console.log('\n---------');
-                
-                // log data to txt file
-                fs.appendFile("log.txt", concertData, function(err) {
-                    if (err) throw err;
-                })
-            }
+                    // translate each data variable into an array
+                    let concertData = [
+                        'Artist: ' + userEntry.toUpperCase(),
+                        'Concert Date: ' + moment(jsonData.datetime).format('L'),
+                        'Concert Time: ' + moment(jsonData.datetime).format('hh:mm A'),
+                        'Venue Name: ' + jsonData.venue.name,
+                        'City: ' + jsonData.venue.city
+                    ].join('\n');
+                    
+                    // log data values to console
+                    console.log('\n---------');
+                    console.log(concertData);
+                    console.log('\n---------');
+                    
+                    // log data to txt file
+                    fs.appendFile("log.txt", concertData, function(err) {
+                        if (err) throw err;
+                    })
+                }
+        } else {
+            //if the user entry isn't a valid song
+            console.log('Sorry, no information found for "' + userEntry + '" song');
+            
+        }
 
         }
     )
 }
-function omdb() {
-    let url = 'http://www.omdbapi.com/?i=tt3896198&apikey='
-    let movie = '"?t=" + userEntry'
-    axios
-    .get(url + keys.omdb.id + movie)
+const myOmdb = function(response) {
+    let url = 'http://www.omdbapi.com/?t=' + userEntry + '&y=&plot=full&tomatoes=true&apikey=' + keys.omdb.id;
+    //formatting the user response and accounting for special char
+    response = response.replace(/\s/g, "%20");
+    response = response.replace(/\//g, "%252F");
+    response = response.replace(/\?/g, "%253F");
+    response = response.replace(/\*/g, "%252A");
+
+    axios.get(url)
     .then(function(response){
-        console.log(response.data);
-        for (let i = 0; i < response.data.length; i++) {
-        
-        let jsonData = response.data[i];
+        //if results found for query
+        if (response.data.length != 0) {
+            
+            let jsonData = response.data;
+            
 
-        // translate each data variable into an array
-        // let movieData = [
-        //     'Movie Title: ' + userEntry.toUpperCase(),
-        //     'Movie Release Date: ' + ,
-        //     'IMDB Rating: ' + ,
-        //     'Rotten Tomatoes Rating: ' + ,
-        //     'Production Country: ' + ,
-        //     'Movie Language: ' + ,
-        //     'Plot: ' + ,
-        //     'Main Actors: ' + ,
-        // ].join('\n');
-        console.log(jsonData);
-        
-        // log data values to console
-        // console.log('\n---------');
-        // console.log(movieData);
-        // console.log('\n---------');
-                
+            
+            // translate each data variable into an array
+            let movieData = [
+                'Movie Title: ' + jsonData.Title,
+                'Movie Release Year: ' + jsonData.Year,
+                'IMDB Rating: ' + jsonData.Ratings[0].Value,
+                'Rotten Tomatoes Rating: ' + jsonData.Ratings[1].Value,
+                'Production Country: ' + jsonData.Country,
+                'Movie Language: ' + jsonData.Language,
+                'Plot: ' + jsonData.Plot,
+                'Main Actors: ' + jsonData.Actors,
+            ].join('\n\n')
+            
+            // log data values to console
+            console.log('\n---------');
+            console.log(movieData);
+            console.log('\n---------');
+                    
 
-        fs.appendFile("log.txt", movieData, function(err) {
-            if (err) throw err;
-        })
+            fs.appendFile('log.txt', movieData, function(err) {
+                if (err) throw err;
+            })
+    } else {
+        //if the user entry isn't a valid movie
+        console.log('Sorry, no information found for "' + userEntry + '" movie');
+        
     }
     })
     .catch(error => {
-        console.log("Fuck.  Error.")
+        console.log("You got an Error, brudduh.")
     });
 }
-function doIt() {
-    fs.readFile("random.txt", "utf8", function (err, data) {
+let doIt = function(userCommand) {
+    fs.readFile('random.txt', 'utf8', function (err, data) {
         if (err) {
             console.log('Error occurred: ' + err);
             return;
         } 
+        //splitting each string in the txt file by the comma
+        data = data.split(',');
+        let userCommand = '';
 
-        let userCommand = data.indexOf(",");
-        let songName = data.slice(userCommand + 2, data.length - 1);
-
-        mySpotify(songName);
+        //determining how to parse the data if there is more than one item
+        if (data.length === 2) { 
+            userCommand = data[0];
+            userEntry = data[1];
+        } else {
+            //using the data in the txt sheet as the command if only one value
+            userCommand = data[0];
+        }
+        if (userCommand === 'spotify-this-song') {
+            mySpotify();   
+        } else {
+            //if the user entry isn't a valid command
+            console.log('I Don\'t Know That Command...');
+        }
 
     });
 
@@ -149,20 +193,24 @@ function doIt() {
 function mySwitch(userCommand) {
     switch (userCommand) {
         case "concert-this":
-        myBandsintown(userCommand);
+            myBandsintown(userCommand);
         break;
     
         case "spotify-this-song":
-        mySpotify(userCommand);
+            mySpotify(userCommand);
         break;
     
         case "movie-this":
-        omdb(userCommand);
+            myOmdb(userCommand);
         break;
     
         case "do-what-it-says":
-        doIt();
+            doIt();
         break;
+
+        default: 
+            return console.log('\nI don\'t know "' + userCommand + '" as a command.\n');
+        
     };
 }
 mySwitch(userCommand);
