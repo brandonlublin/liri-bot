@@ -37,18 +37,23 @@ const mySpotify = function(songName) {
         //Loop through all the track information array
         for (var i = 0; i < trackInfo.length; i++) {
             //Store album object as var
-            var albumObject = trackInfo[i].album;
-            var trackName = trackInfo[i].name
-            var preview = trackInfo[i].preview_url
+            let albumObject = trackInfo[i].album;
+            let preview = trackInfo[i].preview_url
             //Artist name from spotify api based off search
-            var artist = albumObject.artists
+            let artist = albumObject.artists
+            let albumName = albumObject.name;
             //Loop through all of the artist array
             for (var j = 0; j < artist.length; j++) {
+                
                 console.log("\nArtist: " + artist[j].name)
-                console.log("Song Name: " + trackName)
+                console.log("Song Name: " + userEntry.toUpperCase())
                 console.log("Preview of Song: " + preview)
-                console.log("Album Name: " + albumObject.name)
+                console.log("Album Name: " + albumName);
                 console.log("----------------\n")
+
+                fs.appendFile("log.txt" + '\n', movieData, function(err) {
+                    if (err) throw err;
+                })
             }
         }
     });
@@ -62,20 +67,28 @@ const myBandsintown = function(response) {
             if (typeof response.data[0] === undefined) {
                 
             }
+            //loop through each concert returned for an artist
             for (let i = 0; i < response.data.length; i++) {
-                const concerts = response.data[i];
-                const venueName = concerts.venue.name;
-                const date = concerts.datetime;
-                const artist = userEntry.toUpperCase();
-                const location = concerts.venue.city;
+                //store response into a variable
+                let jsonData = response.data[i];
+
+                // translate each data variable into an array
+                let concertData = [
+                    'Artist: ' + userEntry.toUpperCase(),
+                    'Concert Date: ' + moment(jsonData.datetime).format('L'),
+                    'Venue Name: ' + jsonData.venue.name,
+                    'City: ' + jsonData.venue.city
+                ].join('\n');
                 
-                console.log('\nArtist: ' + artist);
-                console.log('Concert Date: ' + date);
-                console.log('Venue Name: ' + venueName);
-                console.log('City: ' + location);
-                console.log('------------\n');
+                // log data values to console
+                console.log('\n---------');
+                console.log(concertData);
+                console.log('\n---------');
                 
-                
+                // log data to txt file
+                fs.appendFile("log.txt", concertData, function(err) {
+                    if (err) throw err;
+                })
             }
 
         }
@@ -83,15 +96,51 @@ const myBandsintown = function(response) {
 }
 function omdb() {
     axios
-    .get(keys.omdb)
-    .then(function(err, data){
+    .get(keys.omdb.id)
+    .then(function(response){
+        console.log(response.data);
+        for (let i = 0; i < response.data.length; i++) {
+        
+        let jsonData = response.data[i];
+
+        // translate each data variable into an array
+        let movieData = [
+            'Movie Title: ' + userEntry.toUpperCase(),
+            'Movie Release Date: ' + ,
+            'IMDB Rating: ' + ,
+            'Rotten Tomatoes Rating: ' + ,
+            'Production Country: ' + ,
+            'Movie Language: ' + ,
+            'Plot: ' + ,
+            'Main Actors: ' + ,
+        ].join('\n');
+        
+        // log data values to console
+        console.log('\n---------');
+        console.log(movieData);
+        console.log('\n---------');
+                
+
+        fs.appendFile("log.txt", movieData, function(err) {
+            if (err) throw err;
+        })
+    }
+    })
+}
+function doIt() {
+    fs.readFile("random.txt", "utf8", function (err, data) {
         if (err) {
             console.log('Error occurred: ' + err);
             return;
         } 
-        console.log(data);
-        
-    })
+
+        let userCommand = data.indexOf(",");
+        let songName = data.slice(userCommand + 2, data.length - 1);
+
+        mySpotify(songName);
+
+    });
+
 }
 
 function mySwitch(userCommand) {
@@ -109,7 +158,7 @@ function mySwitch(userCommand) {
         break;
     
         case "do-what-it-says":
-        doit();
+        doIt();
         break;
     };
 }

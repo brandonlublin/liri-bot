@@ -1,0 +1,188 @@
+Artist: LOCAL NATIVES
+Concert Date: 05/15/2019
+Venue Name: Commodore Ballroom
+City: Vancouver
+Artist: LOCAL NATIVES
+Concert Date: 05/18/2019
+Venue Name: Roseland Theater
+City: Portland
+Artist: LOCAL NATIVES
+Concert Date: 05/23/2019
+Venue Name: Thalia Hall
+City: Chicago
+Artist: LOCAL NATIVES
+Concert Date: 05/24/2019
+Venue Name: Thalia Hall
+City: Chicago
+Artist: LOCAL NATIVES
+Concert Date: 05/25/2019
+Venue Name: Majestic Theatre
+City: Detroit
+Artist: LOCAL NATIVES
+Concert Date: 05/27/2019
+Venue Name: Phoenix Concert Theatre
+City: Toronto
+Artist: LOCAL NATIVES
+Concert Date: 05/28/2019
+Venue Name: Rialto Theatre
+City: Montréal
+Artist: LOCAL NATIVES
+Concert Date: 05/30/2019
+Venue Name: Paradise Rock Club
+City: Boston
+Artist: LOCAL NATIVES
+Concert Date: 05/31/2019
+Venue Name: Paradise Rock Club
+City: Boston
+Artist: LOCAL NATIVES
+Concert Date: 06/01/2019
+Venue Name: Stage AE
+City: Pittsburgh
+Artist: LOCAL NATIVES
+Concert Date: 06/03/2019
+Venue Name: 9:30 Club
+City: Washington
+Artist: LOCAL NATIVES
+Concert Date: 06/04/2019
+Venue Name: 9:30 Club
+City: Washington
+Artist: LOCAL NATIVES
+Concert Date: 06/06/2019
+Venue Name: Brooklyn Steel
+City: Brooklyn
+Artist: LOCAL NATIVES
+Concert Date: 06/07/2019
+Venue Name: Brooklyn Steel
+City: Brooklyn
+Artist: LOCAL NATIVES
+Concert Date: 06/08/2019
+Venue Name: Union Transfer
+City: Philadelphia
+Artist: LOCAL NATIVES
+Concert Date: 06/10/2019
+Venue Name: The Ritz
+City: Raleigh
+Artist: LOCAL NATIVES
+Concert Date: 06/11/2019
+Venue Name: Buckhead Theatre
+City: Atlanta
+Artist: LOCAL NATIVES
+Concert Date: 06/13/2019
+Venue Name: The Aztec Theatre
+City: San Antonio
+Artist: LOCAL NATIVES
+Concert Date: 06/14/2019
+Venue Name: House of Blues
+City: Dallas
+Artist: LOCAL NATIVES
+Concert Date: 06/15/2019
+Venue Name: Stubb's Waller Creek
+City: Austin
+Artist: LOCAL NATIVES
+Concert Date: 06/17/2019
+Venue Name: Ogden Theatre
+City: Denver
+Artist: LOCAL NATIVES
+Concert Date: 06/19/2019
+Venue Name: North Park Theatre
+City: San Diego
+Artist: LOCAL NATIVES
+Concert Date: 06/20/2019
+Venue Name: The Observatory
+City: Santa Ana
+Artist: LOCAL NATIVES
+Concert Date: 06/21/2019
+Venue Name: Fox Theatre
+City: Oakland
+Artist: LOCAL NATIVES
+Concert Date: 06/22/2019
+Venue Name: Hollywood Palladium
+City: Los Angeles
+Artist: LOCAL NATIVES
+Concert Date: 06/28/2019
+Venue Name: Summer Nostos Festival
+City: Athens
+Artist: LOCAL NATIVES
+Concert Date: 07/19/2019
+Venue Name: Oxford Art Factory
+City: Darlinghurst
+Artist: LOCAL NATIVES
+Concert Date: 07/20/2019
+Venue Name: Hotel Esplanade
+City: St Kilda
+Artist: LOCAL NATIVES
+Concert Date: 07/21/2019
+Venue Name: Splendour in the Grass
+City: Wooyung
+Artist: LOCAL NATIVES
+Concert Date: 09/28/2019
+Venue Name: Paradiso Noord, Tolhuistuin
+City: Nieuw-amsterdam
+Artist: LOCAL NATIVES
+Concert Date: 09/29/2019
+Venue Name: Le Botanique
+City: Saint-josse-ten-noode
+Artist: LOCAL NATIVES
+Concert Date: 09/30/2019
+Venue Name: La Maroquinerie
+City: Paris
+Artist: LOCAL NATIVES
+Concert Date: 10/01/2019
+Venue Name: Rote Fabrik Clubraum
+City: Zurich
+Artist: LOCAL NATIVES
+Concert Date: 10/03/2019
+Venue Name: Lido
+City: Berlin
+Artist: LOCAL NATIVES
+Concert Date: 10/05/2019
+Venue Name: Slaktkyrkan
+City: Stockholm
+Artist: LOCAL NATIVES
+Concert Date: 10/06/2019
+Venue Name: Pumpehuset, Lille Sal
+City: København V
+Artist: LOCAL NATIVES
+Concert Date: 10/08/2019
+Venue Name: LUXOR
+City: Koln
+Artist: LOCAL NATIVES
+Concert Date: 10/10/2019
+Venue Name: Concorde 2
+City: Brighton
+Artist: LOCAL NATIVES
+Concert Date: 10/11/2019
+Venue Name: Gorilla
+City: Manchester
+Artist: LOCAL NATIVES
+Concert Date: 10/12/2019
+Venue Name: The Academy, Middle Abbey Street
+City: Dublin
+Artist: LOCAL NATIVES
+Concert Date: 10/14/2019
+Venue Name: Summerhall
+City: Edinburgh
+Artist: LOCAL NATIVES
+Concert Date: 10/15/2019
+Venue Name: Belgrave Music Hall
+City: Leeds
+Artist: LOCAL NATIVES
+Concert Date: 10/16/2019
+Venue Name: Electric Brixton
+City: London
+Artist: LOCAL NATIVES
+Concert Date: 10/17/2019
+Venue Name: The Fleece
+City: Bristol
+Artist: LOCAL NATIVES
+Concert Date: 05/17/2019
+Venue Name: Neptune Theatre
+City: Seattle
+Artist: LOCAL NATIVES
+Concert Date: 05/21/2019
+Venue Name: First Avenue
+City: Minneapolis
+Artist: LOCAL NATIVES
+Concert Date: 05/16/2019
+Venue Name: Neptune Theatre
+City: Seattle
