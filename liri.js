@@ -1,30 +1,32 @@
+//linking to dot.env
 const env = require('dotenv').config();
 
-let keys = require('./keys');
-const axios = require("axios");
+//linking to keys.js
+const keys = require('./keys');
 
-let Bandsintown = require('Bandsintown');
-let Spotify = require ('node-spotify-api');
-let fs = require('fs');
+//bandsintown 
+const Bandsintown = require('Bandsintown');
+const bands = keys.bandsintown
 
-let Omdb = require('omdb');
+//Spotify
+const Spotify = require ('node-spotify-api');
+const spotify = new Spotify(keys.spotify);
+
+const fs = require('fs');
+const axios = require('axios')
+
+const Omdb = require('omdb');
 let userCommand = process.argv[2];
 
 
-let request = process.argv.slice(3).join(' ')
+let userEntry = process.argv.slice(3).join(' ')
 
 let moment = require("moment");
 
-
-var spotify = new Spotify(keys.spotify);
-
-var spotify = function() {
-    if (!request) {   
-        request = "The Sign Ace of base";
-    }
+const mySpotify = function(songName) {
     spotify.search({ 
         type: 'track', 
-        query: request }, 
+        query: userEntry }, 
         function(err, data) {
         if (err) {
             console.log('Error occurred: ' + err);
@@ -32,14 +34,6 @@ var spotify = function() {
         } 
         var trackInfo = data.tracks.items
 
-        var i = 0;
-        // console.log(data.tracks.items[i]);
-
-        // Confirms track exists
-        while (data.tracks.items[i] != "undefined") {
-
-            // Return first 5 results
-            if (i > 4) { break; }
         //Loop through all the track information array
         for (var i = 0; i < trackInfo.length; i++) {
             //Store album object as var
@@ -50,19 +44,44 @@ var spotify = function() {
             var artist = albumObject.artists
             //Loop through all of the artist array
             for (var j = 0; j < artist.length; j++) {
-                console.log("Artist: " + artist[j].name)
+                console.log("\nArtist: " + artist[j].name)
                 console.log("Song Name: " + trackName)
                 console.log("Preview of Song: " + preview)
                 console.log("Album Name: " + albumObject.name)
-                console.log("----------------")
-
-                i++
+                console.log("----------------\n")
             }
-        }
         }
     });
 }
-let omdb = function() {
+const myBandsintown = function(response) {
+    
+    var appKey = 'codingbootcamp'
+    var url = 'https://rest.bandsintown.com/artists/' + userEntry + '/events?app_id=' + appKey;
+    axios.get(url).then(
+        function(response) {
+            if (typeof response.data[0] === undefined) {
+                
+            }
+            for (let i = 0; i < response.data.length; i++) {
+                const concerts = response.data[i];
+                const venueName = concerts.venue.name;
+                const date = concerts.datetime;
+                const artist = userEntry.toUpperCase();
+                const location = concerts.venue.city;
+                
+                console.log('\nArtist: ' + artist);
+                console.log('Concert Date: ' + date);
+                console.log('Venue Name: ' + venueName);
+                console.log('City: ' + location);
+                console.log('------------\n');
+                
+                
+            }
+
+        }
+    )
+}
+function omdb() {
     axios
     .get(keys.omdb)
     .then(function(err, data){
@@ -70,19 +89,19 @@ let omdb = function() {
             console.log('Error occurred: ' + err);
             return;
         } 
-            
+        console.log(data);
+        
     })
-    
 }
 
 function mySwitch(userCommand) {
     switch (userCommand) {
         case "concert-this":
-        bandsintown(userCommand);
+        myBandsintown(userCommand);
         break;
     
         case "spotify-this-song":
-        spotify(userCommand);
+        mySpotify(userCommand);
         break;
     
         case "movie-this":
@@ -94,5 +113,4 @@ function mySwitch(userCommand) {
         break;
     };
 }
-// bandsintown();
 mySwitch(userCommand);
