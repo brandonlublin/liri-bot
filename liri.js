@@ -64,9 +64,6 @@ const myBandsintown = function(response) {
     var url = 'https://rest.bandsintown.com/artists/' + userEntry + '/events?app_id=' + appKey;
     axios.get(url).then(
         function(response) {
-            if (typeof response.data[0] === undefined) {
-                
-            }
             //loop through each concert returned for an artist
             for (let i = 0; i < response.data.length; i++) {
                 //store response into a variable
@@ -95,8 +92,10 @@ const myBandsintown = function(response) {
     )
 }
 function omdb() {
+    let url = 'http://www.omdbapi.com/?i=tt3896198&apikey='
+    let movie = '"?t=" + userEntry'
     axios
-    .get(keys.omdb.id)
+    .get(url + keys.omdb.id + movie)
     .then(function(response){
         console.log(response.data);
         for (let i = 0; i < response.data.length; i++) {
@@ -104,21 +103,22 @@ function omdb() {
         let jsonData = response.data[i];
 
         // translate each data variable into an array
-        let movieData = [
-            'Movie Title: ' + userEntry.toUpperCase(),
-            'Movie Release Date: ' + ,
-            'IMDB Rating: ' + ,
-            'Rotten Tomatoes Rating: ' + ,
-            'Production Country: ' + ,
-            'Movie Language: ' + ,
-            'Plot: ' + ,
-            'Main Actors: ' + ,
-        ].join('\n');
+        // let movieData = [
+        //     'Movie Title: ' + userEntry.toUpperCase(),
+        //     'Movie Release Date: ' + ,
+        //     'IMDB Rating: ' + ,
+        //     'Rotten Tomatoes Rating: ' + ,
+        //     'Production Country: ' + ,
+        //     'Movie Language: ' + ,
+        //     'Plot: ' + ,
+        //     'Main Actors: ' + ,
+        // ].join('\n');
+        console.log(jsonData);
         
         // log data values to console
-        console.log('\n---------');
-        console.log(movieData);
-        console.log('\n---------');
+        // console.log('\n---------');
+        // console.log(movieData);
+        // console.log('\n---------');
                 
 
         fs.appendFile("log.txt", movieData, function(err) {
@@ -126,6 +126,9 @@ function omdb() {
         })
     }
     })
+    .catch(error => {
+        console.log("Fuck.  Error.")
+    });
 }
 function doIt() {
     fs.readFile("random.txt", "utf8", function (err, data) {
